@@ -6,8 +6,9 @@ from app.fyers_service import (
     generate_access_token,
     get_profile,
     get_history,
-    get_holdings,
-    scan_stocks
+    scan_stocks,
+    start_live_scanner,
+    live_market_data
 )
 
 app = FastAPI()
@@ -50,3 +51,16 @@ def scanner(token: str):
 
     return scan_stocks(token)
 
+@app.get("/live-scanner")
+def live_scanner(token: str):
+
+    start_live_scanner(token)
+
+    return {
+        "message": "Live scanner started"
+    }
+
+@app.get("/live-data")
+def live_data():
+
+    return live_market_data
